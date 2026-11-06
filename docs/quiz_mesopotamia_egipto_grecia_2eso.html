@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Historia Antigua: Mesopotamia, Egipto y Grecia (2º ESO)</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome 6 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-meso: #b45309;
+            --color-egipto: #0f766e;
+            --color-grecia: #1d4ed8;
+            --bg-sand: #f8f4eb;
+            --card-border: #e3d7c3;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle at top, #faf6ee 0%, #ede3cf 100%);
+            min-height: 100vh;
+            color: #2b231a;
+        }
+
+        .title-ancient {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.5px;
+            color: #2b1f13;
+        }
+
+        .quiz-card {
+            background-color: #ffffff;
+            border: 2px solid var(--card-border);
+            border-radius: 22px;
+            box-shadow: 0 16px 36px rgba(50, 35, 15, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .badge-meso {
+            background-color: var(--color-meso);
+            color: #ffffff;
+        }
+
+        .badge-egipto {
+            background-color: var(--color-egipto);
+            color: #ffffff;
+        }
+
+        .badge-grecia {
+            background-color: var(--color-grecia);
+            color: #ffffff;
+        }
+
+        .stat-card {
+            background: #ffffff;
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 9px 12px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+
+        .stat-val {
+            font-size: 1.35rem;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .stat-lbl {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #7d6b54;
+        }
+
+        .option-btn {
+            background: #ffffff;
+            border: 2px solid #dfd4c0;
+            color: #342a20;
+            font-weight: 500;
+            font-size: 0.98rem;
+            text-align: left;
+            padding: 13px 18px;
+            border-radius: 14px;
+            margin-bottom: 11px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background: #fdfbf7;
+            border-color: #c49c5e;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 14px rgba(0, 0, 0, 0.05);
+        }
+
+        .option-btn .opt-letter {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 14px;
+            background-color: #efe8db;
+            color: #5c4c38;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+
+        .option-btn.btn-correct {
+            background-color: #ecfdf5 !important;
+            border-color: #10b981 !important;
+            color: #064e3b !important;
+            font-weight: 600;
+        }
+
+        .option-btn.btn-correct .opt-letter {
+            background-color: #10b981;
+            color: #ffffff;
+        }
+
+        .option-btn.btn-wrong {
+            background-color: #fef2f2 !important;
+            border-color: #ef4444 !important;
+            color: #7f1d1d !important;
+        }
+
+        .option-btn.btn-wrong .opt-letter {
+            background-color: #ef4444;
+            color: #ffffff;
+        }
+
+        .feedback-box {
+            border-radius: 16px;
+            padding: 16px 20px;
+        }
+
+        .explanation-callout {
+            background: #fdfaf4;
+            border-left: 4px solid #c89d53;
+            border-radius: 0 10px 10px 0;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            color: #4b3d2d;
+        }
+    </style>
+</head>
+<body class="py-4 px-2">
+
+<div class="container" style="max-width: 860px;">
+
+    <!-- Encabezado de la aplicación -->
+    <header class="text-center mb-4">
+        <div class="d-inline-flex align-items-center gap-2 mb-2">
+            <span class="fs-4">📜</span>
+            <span class="badge bg-dark text-warning px-3 py-1 text-uppercase fw-bold" style="letter-spacing: 1px;">Geografía e Historia &bull; 2º ESO</span>
+            <span class="fs-4">🏺</span>
+        </div>
+        <h1 class="title-ancient display-6 fw-bold mb-1">Cuestionario de Historia Antigua</h1>
+        <p class="text-muted small mb-3">100 preguntas de repaso curricular sobre Mesopotamia, Egipto y Grecia</p>
+
+        <!-- Filtros y Opciones de Sesión -->
+        <div class="card p-3 border-0 shadow-sm bg-white rounded-4 mx-auto mb-3" style="max-width: 720px;">
+            <div class="row g-2 align-items-center">
+                <div class="col-sm-4 text-start">
+                    <label class="form-label small fw-bold text-secondary mb-1 ms-1"><i class="fa-solid fa-landmark me-1"></i>Tema:</label>
+                    <select id="selTema" class="form-select form-select-sm rounded-3" onchange="iniciarNuevaSesion()">
+                        <option value="todos">Todos los temas</option>
+                        <option value="mesopotamia">Mesopotamia y Fuentes (40)</option>
+                        <option value="egipto">Egipto Antiguo (30)</option>
+                        <option value="grecia">Grecia Antigua (30)</option>
+                    </select>
+                </div>
+                <div class="col-sm-4 text-start">
+                    <label class="form-label small fw-bold text-secondary mb-1 ms-1"><i class="fa-solid fa-filter me-1"></i>Tipo:</label>
+                    <select id="selTipo" class="form-select form-select-sm rounded-3" onchange="iniciarNuevaSesion()">
+                        <option value="todos">Test y Respuesta Corta</option>
+                        <option value="test">Solo Tipo Test</option>
+                        <option value="corta">Solo Respuesta Corta</option>
+                    </select>
+                </div>
+                <div class="col-sm-4 text-start">
+                    <label class="form-label small fw-bold text-secondary mb-1 ms-1"><i class="fa-solid fa-list-ol me-1"></i>Nº de preguntas:</label>
+                    <select id="selCantidad" class="form-select form-select-sm rounded-3" onchange="iniciarNuevaSesion()">
+                        <option value="10">Test Rápido (10)</option>
+                        <option value="20" selected>Práctica Normal (20)</option>
+                        <option value="50">Práctica Larga (50)</option>
+                        <option value="100">Cuestionario Completo (100)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Marcadores de Progreso en Tiempo Real (HUD) -->
+    <div class="row g-2 mb-3">
+        <div class="col-3">
+            <div class="stat-card">
+                <div class="stat-val text-primary" id="valPendientes">0</div>
+                <div class="stat-lbl">Por responder</div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="stat-card">
+                <div class="stat-val text-success" id="valAciertos">0</div>
+                <div class="stat-lbl">Aciertos</div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="stat-card">
+                <div class="stat-val text-danger" id="valFallos">0</div>
+                <div class="stat-lbl">Fallos</div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="stat-card">
+                <div class="stat-val text-dark" id="valNota">0.0</div>
+                <div class="stat-lbl">Nota / 10</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Barra de Progreso Dinámica -->
+    <div class="progress mb-4" style="height: 10px; background-color: #ded1bd; border-radius: 20px;">
+        <div id="barraProgreso" class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 0%; border-radius: 20px;"></div>
+    </div>
+
+    <!-- Tarjeta Interactiva del Cuestionario -->
+    <main id="pantallaQuiz">
+        <div class="card quiz-card p-4 p-md-5 mb-4">
+            
+            <!-- Metadata de la Pregunta Actual -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex gap-2 align-items-center">
+                    <span id="tagTema" class="badge badge-meso px-3 py-2 rounded-pill fs-7">Mesopotamia</span>
+                    <span id="tagTipo" class="badge bg-light text-secondary border px-3 py-2 rounded-pill fs-7">Tipo Test</span>
+                </div>
+                <span class="text-muted fw-semibold small" id="tagContador">Pregunta 1 de 20</span>
+            </div>
+
+            <!-- Enunciado Autocontenido -->
+            <h4 class="fw-bold mb-4" id="textoEnunciado" style="line-height: 1.45; color: #201a14;">
+                Cargando enunciado...
+            </h4>
+
+            <!-- Contenedor Modo Test (4 opciones) -->
+            <div id="bloqueTest" class="d-none">
+                <div class="row g-2">
+                    <div class="col-12"><button class="option-btn" onclick="responderOpcionTest(0)" id="btnTest0"><span class="opt-letter">A</span><span class="opt-text"></span></button></div>
+                    <div class="col-12"><button class="option-btn" onclick="responderOpcionTest(1)" id="btnTest1"><span class="opt-letter">B</span><span class="opt-text"></span></button></div>
+                    <div class="col-12"><button class="option-btn" onclick="responderOpcionTest(2)" id="btnTest2"><span class="opt-letter">C</span><span class="opt-text"></span></button></div>
+                    <div class="col-12"><button class="option-btn" onclick="responderOpcionTest(3)" id="btnTest3"><span class="opt-letter">D</span><span class="opt-text"></span></button></div>
+                </div>
+            </div>
+
+            <!-- Contenedor Modo Respuesta Corta -->
+            <div id="bloqueCorta" class="d-none">
+                <div class="mb-3">
+                    <label class="form-label text-muted small fw-semibold">Escribe aquí tu respuesta (una o dos palabras clave):</label>
+                    <div class="input-group">
+                        <input type="text" id="campoCorta" class="form-control form-control-lg rounded-start-3" placeholder="Escribe tu respuesta..." autocomplete="off">
+                        <button class="btn btn-primary px-4 fw-bold" id="btnValidarCorta" onclick="responderCorta()">
+                            <i class="fa-solid fa-check me-1"></i>Comprobar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel de Corrección Didáctica Instantánea -->
+            <div id="panelCorreccion" class="mt-4 d-none">
+                <div class="feedback-box border p-3 mb-2" id="estiloFeedback">
+                    <div class="d-flex align-items-start gap-3">
+                        <div class="fs-3" id="iconoFeedback"></div>
+                        <div class="w-100">
+                            <h6 class="fw-bold mb-1" id="tituloFeedback"></h6>
+                            <div id="respuestaFeedback" class="small mb-2"></div>
+                            <div class="explanation-callout" id="explicacionFeedback"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de Acción y Navegación -->
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mt-4 pt-3 border-top">
+                <button class="btn btn-outline-secondary btn-sm rounded-pill px-3" id="btnSaltar" onclick="saltarPregunta()">
+                    <i class="fa-solid fa-forward me-1"></i>No la sé / Ver respuesta
+                </button>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-danger btn-sm rounded-pill px-3" onclick="finalizarQuiz()">
+                        <i class="fa-solid fa-flag-checkered me-1"></i>Terminar sesión
+                    </button>
+                    <button class="btn btn-success rounded-pill px-4 fw-bold d-none" id="btnSiguientePregunta" onclick="siguientePregunta()">
+                        Siguiente pregunta <i class="fa-solid fa-arrow-right ms-1"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Pantalla Final de Calificaciones -->
+    <div id="pantallaResultados" class="card quiz-card p-5 text-center d-none">
+        <div class="display-3 mb-2" id="resIcono">🏆</div>
+        <h2 class="title-ancient fw-bold mb-1" id="resTitulo">¡Cuestionario Completado!</h2>
+        <p class="text-muted mb-4" id="resMensaje">Has finalizado tu sesión de repaso de Historia Antigua.</p>
+
+        <div class="row g-3 justify-content-center mb-4">
+            <div class="col-sm-3 col-6">
+                <div class="p-3 bg-light rounded-4 border">
+                    <div class="h2 fw-bold text-dark mb-0" id="resTotal">0</div>
+                    <small class="text-muted text-uppercase fw-semibold">Respondidas</small>
+                </div>
+            </div>
+            <div class="col-sm-3 col-6">
+                <div class="p-3 bg-light rounded-4 border">
+                    <div class="h2 fw-bold text-success mb-0" id="resAciertos">0</div>
+                    <small class="text-muted text-uppercase fw-semibold">Aciertos</small>
+                </div>
+            </div>
+            <div class="col-sm-3 col-6">
+                <div class="p-3 bg-light rounded-4 border">
+                    <div class="h2 fw-bold text-danger mb-0" id="resFallos">0</div>
+                    <small class="text-muted text-uppercase fw-semibold">Fallos</small>
+                </div>
+            </div>
+            <div class="col-sm-3 col-6">
+                <div class="p-3 bg-light rounded-4 border">
+                    <div class="h2 fw-bold text-primary mb-0" id="resNota">0.0</div>
+                    <small class="text-muted text-uppercase fw-semibold">Nota sobre 10</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center gap-3">
+            <button class="btn btn-primary rounded-pill px-4 py-2 fw-semibold" onclick="iniciarNuevaSesion()">
+                <i class="fa-solid fa-rotate-right me-2"></i>Nueva Sesión
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<!-- JAVASCRIPT: 100 PREGUNTAS Y LÓGICA AUTOCONTENIDA -->
+<script>
+const bancoPreguntas = [
+    // ==========================================
+    // MESOPOTAMIA Y CONCEPTOS DE HISTORIA (40)
+    // ==========================================
+    {
+        id: 1, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Cómo se define formalmente la disciplina de la Historia en las ciencias sociales?",
+        opciones: ["El estudio del pasado humano a partir de las fuentes", "La investigación biológica de restos fósiles de animales", "El conjunto de mitos y leyendas de transmisión oral", "El estudio exclusivo de las guerras y batallas del siglo XX"],
+        correcta: 0,
+        explicacion: "La Historia es la ciencia que investiga y reconstruye el pasado de la humanidad basándose en las fuentes primarias y secundarias que se conservan."
+    },
+    {
+        id: 2, tema: "mesopotamia", tipo: "test",
+        enunciado: "Según la época en que fueron elaboradas con respecto a los hechos estudiados, ¿en qué dos categorías se clasifican las fuentes históricas?",
+        opciones: ["Fuentes primarias y fuentes secundarias", "Fuentes orales y fuentes escritas", "Fuentes antiguas y fuentes modernas", "Fuentes oficiales y fuentes clandestinas"],
+        correcta: 0,
+        explicacion: "Las fuentes primarias son contemporáneas a los acontecimientos estudiados, mientras que las secundarias se elaboran con posterioridad a partir de las primarias."
+    },
+    {
+        id: 3, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Cuáles son los cuatro tipos fundamentales de fuentes históricas según su naturaleza física o soporte?",
+        opciones: ["Orales, escritas, iconográficas y materiales", "Primarias, secundarias, terciarias y mixtas", "Biológicas, geológicas, químicas y físicas", "Políticas, militares, religiosas y económicas"],
+        correcta: 0,
+        explicacion: "Según su naturaleza se dividen en orales (testimonios hablados), escritas (documentos y textos), iconográficas (imágenes, grabados y cuadros) y materiales (herramientas, edificios y monedas)."
+    },
+    {
+        id: 4, tema: "mesopotamia", tipo: "corta",
+        enunciado: "¿Qué gran logro cultural y tecnológico ocurrido hacia el año 3200 a.C. marca el final de la Prehistoria y el comienzo de la Historia Antigua?",
+        correcta: ["escritura", "la escritura", "invencion de la escritura", "invencion escritura"],
+        solucionVisible: "La invención de la escritura",
+        explicacion: "Hacia el 3200 a.C., la aparición de los primeros registros escritos en Mesopotamia y Egipto establece convencionalmente el inicio de la Historia Antigua."
+    },
+    {
+        id: 5, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Qué acontecimiento histórico ocurrido en el año 476 d.C. pone fin a la Edad Antigua y marca el inicio de la Edad Media?",
+        opciones: ["La caída del Imperio romano de Occidente", "El descubrimiento de América", "La invención de la imprenta", "La conquista de Babilonia por los persas"],
+        correcta: 0,
+        explicacion: "En el año 476 d.C. el último emperador romano de Occidente fue depuesto, dando paso a la Edad Media."
+    },
+    {
+        id: 6, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Qué suceso de alcance mundial ocurrido en el año 1492 señala el fin de la Edad Media y el inicio de la Edad Moderna?",
+        opciones: ["El descubrimiento de América", "La Revolución francesa", "La caída de Constantinopla", "La invención de la rueda"],
+        correcta: 0,
+        explicacion: "La llegada de Cristóbal Colón a América en 1492 marca tradicionalmente en el currículo de secundaria el inicio de la Edad Moderna."
+    },
+    {
+        id: 7, tema: "mesopotamia", tipo: "corta",
+        enunciado: "¿Qué gran revolución política iniciada en el año 1789 marca el comienzo de la Historia Contemporánea?",
+        correcta: ["revolucion francesa", "la revolucion francesa"],
+        solucionVisible: "La Revolución francesa",
+        explicacion: "La Revolución francesa de 1789 derrumbó el Antiguo Régimen e inauguró la Edad Contemporánea."
+    },
+    {
+        id: 8, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Qué ciencia auxiliar de la historia se especializa en descifrar y estudiar inscripciones grabadas en piedra, metal o soportes duros?",
+        opciones: ["Epigrafía", "Numismática", "Paleografía", "Filología"],
+        correcta: 0,
+        explicacion: "La epigrafía analiza inscripciones grabadas sobre materias duras como piedra caliza, mármol o bronce."
+    },
+    {
+        id: 9, tema: "mesopotamia", tipo: "corta",
+        enunciado: "¿Cómo se llama la ciencia auxiliar de la historia que descifra y estudia la escritura antigua conservada sobre materiales blandos como papiro o pergamino?",
+        correcta: ["paleografia", "paleografía"],
+        solucionVisible: "Paleografía",
+        explicacion: "La paleografía estudia las formas de grafía y descifra documentos históricos sobre soportes blandos como pergamino, papel o papiro."
+    },
+    {
+        id: 10, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Qué ciencia auxiliar de la historia se dedica al estudio, clasificación e interpretación de las monedas y medallas antiguas?",
+        opciones: ["Numismática", "Arqueología", "Cronología", "Antropología"],
+        correcta: 0,
+        explicacion: "La numismática aporta datos económicos, políticos y cronológicos esenciales estudiando piezas monetarias de la Antigüedad."
+    },
+    {
+        id: 11, tema: "mesopotamia", tipo: "corta",
+        enunciado: "¿Cuáles fueron los dos grandes ríos junto a los que floreció la civilización fluvial de la antigua India?",
+        correcta: ["indo y ganges", "ganges e indo", "indo ganges", "indo", "ganges"],
+        solucionVisible: "Indo y Ganges",
+        explicacion: "La civilización del valle del Indo y la cultura védica florecieron alimentadas por los cauces del río Indo y el río Ganges."
+    },
+    {
+        id: 12, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Qué dos grandes ríos de Asia oriental permitieron el desarrollo de la civilización fluvial en China?",
+        opciones: ["Huang He (río Amarillo) y Yangtsé (río Azul)", "Tigris y Éufrates", "Indo y Ganges", "Mekong y Brahmaputra"],
+        correcta: 0,
+        explicacion: "La civilización china surgió entre las cuencas fértiles del Huang He (Amarillo) al norte y el Yangtsé (Azul) al sur."
+    },
+    {
+        id: 13, tema: "mesopotamia", tipo: "corta",
+        enunciado: "¿Qué significado etimológico tiene en griego el nombre 'Mesopotamia'?",
+        correcta: ["pais entre rios", "tierra entre rios", "entre rios", "el pais entre rios", "la tierra entre rios"],
+        solucionVisible: "País entre ríos (Tierra entre ríos)",
+        explicacion: "El término deriva de mesos ('medio' o 'entre') y potamos ('río'), significando exactamente 'tierra o país entre ríos'."
+    },
+    {
+        id: 14, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Cuáles son los dos grandes ríos que delimitan y fertilizan la región histórica de Mesopotamia?",
+        opciones: ["Tigris y Éufrates", "Nilo y Jordán", "Indo y Ganges", "Danubio y Rin"],
+        correcta: 0,
+        explicacion: "Mesopotamia ocupaba la fértil cuenca sedimentaria regada por los ríos Tigris y Éufrates hasta desembocar en el Golfo Pérsico."
+    },
+    {
+        id: 15, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Qué dos importantes ciudades históricas se encontraban en la región montañosa de la Alta Mesopotamia?",
+        opciones: ["Asur y Nimrud", "Ur y Uruk", "Babilonia y Larsa", "Nippur y Eridu"],
+        correcta: 0,
+        explicacion: "La Alta Mesopotamia al norte era el territorio original de los asirios, donde se levantaron Asur y Nimrud."
+    },
+    {
+        id: 16, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Qué conjunto de ciudades floreció en la llanura meridional conocida como Baja Mesopotamia (Sumer y Acad)?",
+        opciones: ["Babilonia, Nippur, Uruk, Larsa y Ur", "Asur y Nínive exclusivamente", "Tebas, Menfis y Alejandría", "Micenas, Esparta y Atenas"],
+        correcta: 0,
+        explicacion: "En las tierras llanas y aluviales del sur se concentraron las célebres ciudades-estado sumerias y babilónicas como Ur, Uruk y Babilonia."
+    },
+    {
+        id: 17, tema: "mesopotamia", tipo: "corta",
+        enunciado: "¿Qué pueblo es considerado la primera civilización urbana de la historia, creador de las ciudades-estado y de la escritura hacia el 3200 a.C.?",
+        correcta: ["sumerios", "sumeria", "los sumerios"],
+        solucionVisible: "Los sumerios (Sumeria)",
+        explicacion: "Los sumerios inventaron la escritura cuneiforme y fundaron las primeras ciudades-estado autónomas como Ur, Uruk y Lagash."
+    },
+    {
+        id: 18, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Quién fue el legendario rey sumerio de la ciudad de Uruk sobre el que se compuso el primer poema épico de la humanidad?",
+        opciones: ["Gilgamesh", "Hammurabi", "Sargón de Acad", "Nabucodonosor II"],
+        correcta: 0,
+        explicacion: "Gilgamesh fue el rey semimítico de Uruk protagonista de la 'Epopeya de Gilgamesh', en busca del secreto de la inmortalidad."
+    },
+    {
+        id: 19, tema: "mesopotamia", tipo: "corta",
+        enunciado: "¿Qué pueblo de origen semita unificó por primera vez las ciudades de Mesopotamia creando el primer gran imperio con capital en Acad?",
+        correcta: ["acadios", "los acadios", "imperio acadio"],
+        solucionVisible: "Los acadios",
+        explicacion: "Hacia el 2300 a.C., los acadios conquistaron las urbes sumerias formando el primer imperio centralizado con capital en Acad."
+    },
+    {
+        id: 20, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Qué rey acadio es célebre por haber fundado el primer gran imperio unificado de la historia mesopotámica?",
+        opciones: ["Sargón I (Sargón de Acad)", "Hammurabi de Babilonia", "Assurbanipal II de Asiria", "Ciro II el Grande"],
+        correcta: 0,
+        explicacion: "Sargón I lideró a los acadios en la conquista de toda la cuenca fluvial mesopotámica fundando una dinastía imperial."
+    },
+    {
+        id: 21, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Por qué logro normativo e histórico es especialmente famosa la civilización de los babilonios en Mesopotamia?",
+        opciones: ["Por redactar los primeros grandes códigos de leyes escritos", "Por inventar la navegación a vela en alta mar", "Por construir pirámides escalonadas de granito", "Por acuñar las primeras monedas de plata"],
+        correcta: 0,
+        exp: "El Imperio babilónico fijó las leyes por escrito, destacando el Código de Hammurabi para unificar la justicia bajo la ley del talión."
+    },
+    {
+        id: 22, tema: "mesopotamia", tipo: "corta",
+        enunciado: "¿Cuál fue la capital del poderoso Imperio Asirio que llegó a dominar Mesopotamia y Egipto bajo reyes como Assurbanipal II?",
+        correcta: ["ninive"],
+        solucionVisible: "Nínive",
+        explicacion: "Nínive, situada a orillas del río Tigris, fue la fortificada capital asiria y sede de una célebre biblioteca de tablillas de arcilla."
+    },
+    {
+        id: 23, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Qué rey del Imperio Neobabilónico (caldeos) embelleció Babilonia construyendo la Puerta de Ishtar y los jardines colgantes?",
+        opciones: ["Nabucodonosor II", "Sargón I", "Gilgamesh", "Gudea"],
+        correcta: 0,
+        explicacion: "Nabucodonosor II gobernó el renacimiento caldeo de Babilonia, ampliando el imperio y monumentalizando la ciudad."
+    },
+    {
+        id: 24, tema: "mesopotamia", tipo: "corta",
+        enunciado: "¿Qué monarca persa del siglo VI a.C. creó un inmenso imperio que se extendía desde Egipto hasta la India?",
+        correcta: ["ciro ii", "ciro", "ciro el grande"],
+        solucionVisible: "Ciro II (Ciro el Grande)",
+        explicacion: "Ciro II unificó a los persas, tomó Babilonia en el 539 a.C. y sentó las bases del colosal Imperio persa aqueménida."
+    },
+    {
+        id: 25, tema: "mesopotamia", tipo: "corta",
+        enunciado: "¿Cómo se llama la hija del rey Sargón de Acad que ejerció como gran sacerdotisa en Ur y es la primera escritora y poeta conocida con nombre propio en la historia?",
+        correcta: ["enheduanna"],
+        solucionVisible: "Enheduanna",
+        explicacion: "Enheduanna, sacerdotisa del dios Nannar en Ur, compuso himnos religiosos y es la primera creadora literaria registrada por su nombre."
+    },
+    {
+        id: 26, tema: "mesopotamia", tipo: "test",
+        enunciado: "En la escultura mesopotámica, ¿qué conocida figura de la ciudad de Lagash encarna el modelo de 'rey-sacerdote' piadoso y pacífico?",
+        opciones: ["Gudea de Lagash", "Ciro II", "Assurbanipal", "Darío I"],
+        correcta: 0,
+        explicacion: "Las estatuas sedentes de Gudea talladas en diorita negra lo muestran orando con túnica y turbante como devoto servidor de los dioses."
+    },
+    {
+        id: 27, tema: "mesopotamia", tipo: "corta",
+        enunciado: "¿Qué famosa caja de madera con incrustaciones de lapislázuli y conchas descubierta en las tumbas reales de Ur muestra en frisos escenas de paz y de guerra?",
+        correcta: ["estandarte de ur", "el estandarte de ur"],
+        solucionVisible: "El Estandarte de Ur",
+        explicacion: "El Estandarte de Ur es una pieza cumbre del arte sumerio con mosaicos en dos caras: la cara de la Guerra y la cara de la Paz."
+    },
+    {
+        id: 28, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Cómo eran las creencias religiosas de los pueblos mesopotámicos respecto a sus dioses?",
+        opciones: ["Eran politeístas con dioses antropomorfos (forma y emociones humanas)", "Eran monoteístas con un único creador invisible", "Eran ateos sin templos ni cultos organizados", "Adoraban exclusivamente a felinos sagrados de la estepa"],
+        correcta: 0,
+        explicacion: "En Mesopotamia se rendía culto a numerosos dioses (politeísmo), concebidos con cuerpo humano y atributos de la naturaleza."
+    },
+    {
+        id: 29, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Cuáles de los siguientes eran cuatro de los principales dioses del panteón mesopotámico?",
+        opciones: ["Anu (cielo), Enlil (viento), Marduk (Babilonia) e Ishtar (amor y guerra)", "Zeus, Hera, Apolo y Atenea", "Ra, Osiris, Isis y Horus", "Júpiter, Marte, Minerva y Neptuno"],
+        correcta: 0,
+        explicacion: "Anu (dios celeste), Enlil (señor del aire y las tormentas), Marduk (dios nacional babilónico) e Ishtar (diosa del amor y el combate) fueron dioses centrales en Mesopotamia."
+    },
+    {
+        id: 30, tema: "mesopotamia", tipo: "corta",
+        enunciado: "¿Qué nombre recibe el sistema de escritura inventado en Mesopotamia que utilizaba signos en forma de cuña o clavo?",
+        correcta: ["cuneiforme", "escritura cuneiforme"],
+        solucionVisible: "Escritura cuneiforme",
+        explicacion: "Se llama cuneiforme por la forma de cuña que dejaba el estilete de caña de sección triangular al presionar sobre arcilla húmeda."
+    },
+    {
+        id: 31, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Sobre qué soporte material y en qué periodo cronológico se empleó principalmente la escritura cuneiforme?",
+        opciones: ["En tablillas de barro blando (luego secadas al sol o cocidas) desde el 3200 a.C. hasta el siglo I d.C.", "En rollos de papiro vegetal durante el siglo IV a.C.", "En pergaminos de cuero curtido en monasterios medievales", "En láminas de plomo durante el Renacimiento"],
+        correcta: 0,
+        explicacion: "El barro del río fue el soporte perfecto y duradero para las tablillas cuneiformes durante más de tres mil años."
+    },
+    {
+        id: 32, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Qué pueblos de Oriente Próximo adoptaron la escritura cuneiforme para redactar sus lenguas?",
+        opciones: ["Sumerios, elamitas, acadios, babilonios, asirios, hititas y persas", "Griegos, romanos, cartagineses y galos", "Egipcios y fenicios exclusivamente", "Íberos, celtas y vikingos"],
+        correcta: 0,
+        explicacion: "La escritura cuneiforme se adaptó a idiomas de muy diversas familias lingüísticas a lo largo de todo el Próximo Oriente."
+    },
+    {
+        id: 33, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Qué caracteriza a un sistema de escritura pictográfico o ideográfico?",
+        opciones: ["Cada signo representa directamente un objeto, palabra o idea, sumando más de 300 símbolos", "Cada signo representa una letra que se corresponde con un sonido fonético elemental", "Utiliza únicamente diez dígitos matemáticos", "Usa un conjunto cerrado de 24 letras"],
+        correcta: 0,
+        explicacion: "En las fases pictográficas e ideográficas cada símbolo aludía a una palabra o concepto, exigiendo memorizar cientos de dibujos."
+    },
+    {
+        id: 34, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Cómo funciona un sistema de escritura silábico y cuántos signos utiliza aproximadamente?",
+        opciones: ["Los signos representan sonidos de sílabas (ma, me, mi...) y tiene entre 60 y 100 signos", "Tiene miles de jeroglíficos que representan oraciones completas", "Utiliza exactamente 12 letras mayúsculas", "Usa únicamente tres consonantes primarias"],
+        correcta: 0,
+        explicacion: "La escritura silábica descompone las palabras en combinaciones de sílabas, reduciendo drásticamente el inventario de caracteres a 60-100."
+    },
+    {
+        id: 35, tema: "mesopotamia", tipo: "corta",
+        enunciado: "¿Aproximadamente cuántos signos o letras componen un sistema de escritura alfabético donde cada símbolo representa un solo sonido elemental?",
+        correcta: ["unos 30", "30", "30 signos", "unos 30 signos", "alrededor de 30", "veinticinco a treinta"],
+        solucionVisible: "Unos 30 signos",
+        explicacion: "El alfabeto fonético requiere apenas una treintena de letras para reproducir cualquier término de la lengua hablada."
+    },
+    {
+        id: 36, tema: "mesopotamia", tipo: "corta",
+        enunciado: "¿Qué objeto cilíndrico de piedra con relieves tallados se hacía rodar sobre arcilla fresca para firmar o sellar documentos en Mesopotamia?",
+        correcta: ["cilindro sello", "cilindros sello", "sello cilindrico", "sello cilindro"],
+        solucionVisible: "Cilindro sello",
+        explicacion: "Al rodar sobre la tablilla fresca, el cilindro sello imprimía de forma continua un friso con la firma o emblema oficial del dignatario."
+    },
+    {
+        id: 37, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Qué célebre inscripción monumental trilingüe tallada en un acantilado de Persia permitió descifrar la escritura cuneiforme?",
+        opciones: ["La inscripción de Behistún", "La Piedra de Rosetta", "La Estela de Hammurabi", "El Disco de Festos"],
+        correcta: 0,
+        explicacion: "La inscripción de Behistún, ordenada por Darío I en tres idiomas cuneiformes, permitió a Grotefend y Rawlinson descifrar esta escritura."
+    },
+    {
+        id: 38, tema: "mesopotamia", tipo: "corta",
+        enunciado: "En la Epopeya de Gilgamesh, ¿quién es el sabio que sobrevivió al Diluvio Universal construyendo una gran nave aconsejado por los dioses?",
+        correcta: ["utnapistim", "utnapishtim"],
+        solucionVisible: "Utnapistim",
+        explicacion: "Utnapistim es el superviviente mesopotámico del diluvio a quien los dioses concedieron el don de la inmortalidad."
+    },
+    {
+        id: 39, tema: "mesopotamia", tipo: "corta",
+        enunciado: "¿Cómo se llama la torre escalonada piramidal con terrazas superpuestas característica de las ciudades de Mesopotamia?",
+        correcta: ["zigurat"],
+        solucionVisible: "Zigurat",
+        explicacion: "El zigurat era el gran monumento escalonado de adobe que dominaba la ciudad y albergaba el santuario superior de la divinidad."
+    },
+    {
+        id: 40, tema: "mesopotamia", tipo: "test",
+        enunciado: "¿Cuáles eran las cuatro funciones principales que cumplía el complejo del zigurat mesopotámico?",
+        opciones: ["Templo religioso, palacio residencial, observatorio astronómico y almacén de cosechas", "Teatro dramático, estadio olímpico, baños públicos y mercado", "Tumba funeraria secreta, cárcel y arsenal militar", "Faro marítimo de costa, muralla y puerto comercial"],
+        correcta: 0,
+        explicacion: "El zigurat combinaba la cúspide sagrada (templo), la sede del rey-sacerdote (palacio), la torre de estudio estelar (observatorio) y depósitos de grano (almacén)."
+    },
+
+    // ==========================================
+    // EGIPTO ANTIGUO (30)
+    // ==========================================
+    {
+        id: 41, tema: "egipto", tipo: "test",
+        enunciado: "¿Qué dos grandes desiertos cercaban y protegían de invasiones el fértil valle del río Nilo?",
+        opciones: ["El Desierto de Libia al oeste y el Desierto de Arabia al este", "El Desierto del Sáhara y el Desierto de Gobi", "El Desierto de Atacama y el de Mojave", "El Desierto de Siria y el de Kalahari"],
+        correcta: 0,
+        explicacion: "El estrecho pasillo verde del Nilo estaba protegido por barreras naturales: el desierto líbico a poniente y el arábigo a levante."
+    },
+    {
+        id: 42, tema: "egipto", tipo: "corta",
+        enunciado: "¿En qué región de Egipto (Alto o Bajo Egipto) se localiza la fértil desembocadura del Nilo en forma de delta junto al mar Mediterráneo?",
+        correcta: ["bajo egipto", "el bajo egipto"],
+        solucionVisible: "Bajo Egipto",
+        explicacion: "El Bajo Egipto corresponde al norte pantanoso y fértil donde el río se ramifica en delta hacia el mar Mediterráneo."
+    },
+    {
+        id: 43, tema: "egipto", tipo: "test",
+        enunciado: "¿Cuáles fueron las dos ciudades más importantes que actuaron como capitales a lo largo de la historia de Egipto?",
+        opciones: ["Menfis en el norte y Tebas en el sur", "Babilonia y Ur", "Atenas y Esparta", "Nínive y Persépolis"],
+        correcta: 0,
+        explicacion: "Menfis (junto al vértice del delta) capitalizó el Imperio Antiguo, y Tebas (en el Alto Egipto) fue la gran sede de los imperios Medio y Nuevo."
+    },
+    {
+        id: 44, tema: "egipto", tipo: "corta",
+        enunciado: "¿Qué histórica placa de esquisto verde con relieves conmemora la unificación del Alto y el Bajo Egipto por el primer faraón?",
+        correcta: ["paleta de narmer", "la paleta de narmer", "narmer"],
+        solucionVisible: "La Paleta de Narmer",
+        explicacion: "La Paleta de Narmer (hacia 3100 a.C.) muestra al monarca victorioso coronado con los emblemas de ambos reinos unificados."
+    },
+    {
+        id: 45, tema: "egipto", tipo: "test",
+        enunciado: "¿Cuál fue la capital y quiénes fueron los faraones más célebres del Imperio Antiguo egipcio?",
+        opciones: ["Capital en Menfis; faraones Keops, Kefrén y Micerino", "Capital en Tebas; Tutankamón y Ramsés II", "Capital en Ajetatón; Akenatón", "Capital en Alejandría; Cleopatra"],
+        correcta: 0,
+        explicacion: "Durante el Imperio Antiguo (3100-2181 a.C.), Menfis fue la sede de los faraones constructores de las tres grandes pirámides de Guiza."
+    },
+    {
+        id: 46, tema: "egipto", tipo: "corta",
+        enunciado: "¿Qué monumentales construcciones funerarias de piedra caliza se erigieron en Guiza durante el Imperio Antiguo?",
+        correcta: ["las piramides", "piramides", "piramides de gizeh", "piramides de guiza"],
+        solucionVisible: "Las pirámides",
+        explicacion: "El Imperio Antiguo destacó por la monumental edificación de pirámides como moradas eternas para los reyes dioses."
+    },
+    {
+        id: 47, tema: "egipto", tipo: "test",
+        enunciado: "¿Qué pueblo asiático armado con carros de combate tirados por caballos invadió Egipto en el Segundo Periodo Intermedio?",
+        opciones: ["Los hicsos", "Los persas", "Los dorios", "Los fenicios"],
+        correcta: 0,
+        explicacion: "Los hicsos controlaron el Bajo Egipto durante más de un siglo hasta que fueron expulsados por los príncipes de Tebas."
+    },
+    {
+        id: 48, tema: "egipto", tipo: "test",
+        enunciado: "¿Qué tres conocidos faraones gobernaron durante el Imperio Nuevo, época de máxima expansión territorial hacia Siria y Palestina?",
+        opciones: ["Akenatón, Tutankamón y Ramsés II", "Keops, Kefrén y Micerino", "Sargón I, Hammurabi y Ciro", "Ptolomeo I y Cleopatra VII"],
+        correcta: 0,
+        explicacion: "En el Imperio Nuevo reinaron el reformador Akenatón, el joven Tutankamón y el poderoso militar y constructor Ramsés II."
+    },
+    {
+        id: 49, tema: "egipto", tipo: "corta",
+        enunciado: "¿Quién fue la última reina faraona de la dinastía ptolemaica antes de que Egipto se convirtiera en provincia romana en el año 31 a.C.?",
+        correcta: ["cleopatra", "cleopatra vii"],
+        solucionVisible: "Cleopatra (Cleopatra VII)",
+        explicacion: "Cleopatra VII concluyó la dinastía helenística ptolemaica tras su derrota militar frente a Octavio Augusto."
+    },
+    {
+        id: 50, tema: "egipto", tipo: "test",
+        enunciado: "¿Cuál era la escala jerárquica de la pirámide social egipcia, desde la cúspide hasta la base?",
+        opciones: ["Faraón y su familia > Nobles y sacerdotes > Artesanos y comerciantes > Campesinos > Esclavos", "Campesinos > Artesanos > Faraón > Esclavos > Nobles", "Sacerdotes > Campesinos > Comerciantes > Faraón", "Faraón > Esclavos > Nobles > Campesinos"],
+        correcta: 0,
+        explicacion: "En la cumbre estaba el faraón dios; le seguían nobles/sacerdotes, artesanos/escribas/comerciantes, el campesinado (la mayoría) y los esclavos."
+    },
+    {
+        id: 51, tema: "egipto", tipo: "corta",
+        enunciado: "¿Cómo se llama la corona combinada que unía la tiara blanca del Alto Egipto con la mitra roja del Bajo Egipto?",
+        correcta: ["doble corona", "la doble corona", "psjent"],
+        solucionVisible: "La doble corona (Pschent)",
+        explicacion: "La doble corona simbolizaba la unión territorial indisoluble de las Dos Tierras bajo el cetro del faraón."
+    },
+    {
+        id: 52, tema: "egipto", tipo: "test",
+        enunciado: "¿Qué tocado de tela a rayas azules y doradas cubría la cabeza del faraón cayendo sobre sus hombros?",
+        opciones: ["El nemes", "La toga", "El jituque", "La mitra"],
+        correcta: 0,
+        explicacion: "El nemes era el característico pañuelo funerario y ceremonial que envolvía la cabeza del faraón rematado por el ureo o cobra protectora."
+    },
+    {
+        id: 53, tema: "egipto", tipo: "corta",
+        enunciado: "¿Qué dos atributos o cetros pastoriles cruzaba el faraón sobre su pecho como símbolo de mando y protección sobre su pueblo?",
+        correcta: ["cayado y latigo", "el cayado y el latigo", "cayado latigo"],
+        solucionVisible: "El cayado y el látigo",
+        explicacion: "El cayado de pastor (heka) y el látigo o flagelo (nejej) expresaban su misión de guiar y castigar o disciplinar."
+    },
+    {
+        id: 54, tema: "egipto", tipo: "test",
+        enunciado: "¿Qué tocado o corona especial de color azul lucía el faraón egipcio cuando dirigía a sus tropas en la batalla?",
+        opciones: ["La corona de guerra (o Jepresh)", "La corona roja del norte", "La corona blanca del sur", "Una diadema de plata y flores"],
+        correcta: 0,
+        explicacion: "El Jepresh era un casco de cuero endurecido azul tachonado de anillos dorados empleado por el faraón en campañas militares."
+    },
+    {
+        id: 55, tema: "egipto", tipo: "corta",
+        enunciado: "¿Qué famosa escultura del Museo del Louvre representa con gran realismo a un funcionario con las piernas cruzadas listo para escribir sobre papiro?",
+        correcta: ["el escriba sentado", "escriba sentado", "el escriba"],
+        solucionVisible: "El escriba sentado",
+        explicacion: "Esculpida en caliza policromada con ojos de cuarzo y cristal, es una de las obras cumbres del realismo del Imperio Antiguo."
+    },
+    {
+        id: 56, tema: "egipto", tipo: "test",
+        enunciado: "¿Quiénes fueron los tres faraones de la dinastía IV para los que se levantaron las tres grandes pirámides de Guiza?",
+        opciones: ["Keops, Kefrén y Micerino", "Ramsés I, Ramsés II y Ramsés III", "Tutmosis, Amenofis y Akenatón", "Zoser, Snefru y Narmer"],
+        correcta: 0,
+        explicacion: "Las pirámides de Guiza pertenecieron a Keops (la Gran Pirámide), a su hijo Kefrén y a su nieto Micerino."
+    },
+    {
+        id: 57, tema: "egipto", tipo: "corta",
+        enunciado: "¿Qué gigantesco monumento con cuerpo de león recostado y cabeza humana custodiaba la meseta de las pirámides en Guiza?",
+        correcta: ["la esfinge", "esfinge", "la gran esfinge", "esfinge de gizeh", "esfinge de guiza"],
+        solucionVisible: "La Gran Esfinge",
+        explicacion: "Tallada directamente en la roca natural, la Gran Esfinge con el rostro atribuido a Kefrén protegía la necrópolis real."
+    },
+    {
+        id: 58, tema: "egipto", tipo: "corta",
+        enunciado: "¿De qué influyente reina y esposa del faraón Akenatón se conserva un famosísimo busto policromado con tiara cilíndrica azul?",
+        correcta: ["nefertiti", "busto de nefertiti"],
+        solucionVisible: "Nefertiti",
+        explicacion: "El busto de Nefertiti, hallado en las ruinas de Amarna, es un icono supremo de belleza y refinamiento del arte egipcio."
+    },
+    {
+        id: 59, tema: "egipto", tipo: "test",
+        enunciado: "¿Qué imponente templo del sur de Egipto ordenó excavar en la roca Ramsés II decorando su fachada con cuatro colosos suyos sentados?",
+        opciones: ["Abu Simbel", "Karnak", "Luxor", "Edfú"],
+        correcta: 0,
+        explicacion: "El templo rupestre de Abu Simbel fue excavado en los acantilados de Nubia para conmemorar la gloria militar de Ramsés II."
+    },
+    {
+        id: 60, tema: "egipto", tipo: "test",
+        enunciado: "¿Qué rasgo definía la apariencia física de las divinidades en la religión del Antiguo Egipto?",
+        opciones: ["Eran representados con rasgos antropomorfos y zoomorfos (cuerpo humano y cabeza de animal)", "Eran descritos como seres totalmente invisibles", "Solo tenían apariencia de astros redondos", "Eran estatuas geométricas sin ojos ni rostro"],
+        correcta: 0,
+        explicacion: "Los egipcios expresaban las virtudes divinas combinando anatomía humana con cabezas de animales sagrados (halcón, chacal, ibis, vaca)."
+    },
+    {
+        id: 61, tema: "egipto", tipo: "test",
+        enunciado: "¿Qué dioses formaban parte del panteón principal egipcio adorados como el dios del sol, el señor del más allá y la madre protectora?",
+        opciones: ["Ra (sol), Osiris (resurrección y juicio) e Isis (maternidad y magia)", "Zeus, Poseidón y Hades", "Marduk, Enlil e Ishtar", "Júpiter, Juno y Minerva"],
+        correcta: 0,
+        explicacion: "Ra encarnaba el sol creador, Osiris juzgaba las almas de los muertos tras su triunfo sobre la muerte, e Isis representaba el amor y la protección divina."
+    },
+    {
+        id: 62, tema: "egipto", tipo: "corta",
+        enunciado: "¿Qué complejo ritual de preservación corporal con vendajes de lino y sales de natrón practicaban los egipcios para asegurar la vida eterna?",
+        correcta: ["momificacion", "momificación", "embalsamamiento"],
+        solucionVisible: "La momificación (o embalsamamiento)",
+        explicacion: "Mediante la momificación evitaban la putrefacción física para que el alma (Ka y Ba) pudiera regresar a su cuerpo en el Más Allá."
+    },
+    {
+        id: 63, tema: "egipto", tipo: "test",
+        enunciado: "En la arquitectura monumental de los templos egipcios, ¿qué era la 'sala hipóstila'?",
+        opciones: ["Una gran sala interior techada sostenida por un bosque de columnas", "El estanque sagrado exterior para abluciones", "La rampa de acceso protegida por esfinges", "La habitación subterránea donde se guardaba el tesoro"],
+        correcta: 0,
+        explicacion: "La sala hipóstila simbolizaba el bosque primigenio de la creación, con decenas de columnas colosales sosteniendo los arquitrabes del techo."
+    },
+    {
+        id: 64, tema: "egipto", tipo: "corta",
+        enunciado: "¿Cómo se llama la puerta monumental de acceso a los templos egipcios, formada por dos grandes torres con muros en talud?",
+        correcta: ["pilonos", "los pilonos", "pilono"],
+        solucionVisible: "Los pilonos",
+        explicacion: "Los pilonos flanqueaban la entrada con bajorrelieves del faraón derrotando a sus enemigos y ranuras para mástiles sagrados."
+    },
+    {
+        id: 65, tema: "egipto", tipo: "test",
+        enunciado: "¿A qué recinto sagrado y oscuro del templo egipcio solo podían acceder el faraón y los sumos sacerdotes?",
+        opciones: ["A la Cámara del dios (el santuario con la estatua divina)", "Al patio de columnas exterior", "A los pórticos de la entrada", "A las plazas de los talleres de artesanos"],
+        correcta: 0,
+        explicacion: "El sanctasanctórum o cámara del dios estaba al fondo del templo; allí residía la imagen cultual a la que se alimentaba y vestía a diario."
+    },
+    {
+        id: 66, tema: "egipto", tipo: "test",
+        enunciado: "¿Cuáles fueron las tres tipologías principales de sepulcros o tumbas monumentales desarrolladas en Egipto?",
+        opciones: ["Mastaba, Pirámide e Hipogeo", "Zigurat, Menhir y Crómlech", "Catacumba, Columbario y Cripta", "Túmulo, Nicho y Mausoleo"],
+        correcta: 0,
+        explicacion: "Las tumbas evolucionaron desde la mastaba (caja trapezoidal de ladrillo o piedra) a la pirámide y más tarde al hipogeo excavado en la montaña."
+    },
+    {
+        id: 67, tema: "egipto", tipo: "test",
+        enunciado: "¿Qué cámaras principales articulaban la distribución interior de una gran pirámide egipcia?",
+        opciones: ["Cámara del rey, cámara de la reina y cámara subterránea", "Patio público, mercado y teatro", "Sala hipóstila, vestíbulo y altar de sacrificios", "Celdas de guardia y establos"],
+        correcta: 0,
+        explicacion: "El diseño de la Gran Pirámide incluye una cámara subterránea excavada en el lecho rocoso, una cámara intermedia ('de la reina') y la cámara real superior."
+    },
+    {
+        id: 68, tema: "egipto", tipo: "corta",
+        enunciado: "¿Cómo se denomina la tumba monumental excavada en las entrañas de una montaña rocosa, como las del Valle de los Reyes?",
+        correcta: ["hipogeo", "el hipogeo"],
+        solucionVisible: "El hipogeo",
+        explicacion: "Los hipogeos eran galerías y cámaras funerarias subterráneas horadadas en la piedra caliza para evitar los saqueos de tumbas."
+    },
+    {
+        id: 69, tema: "egipto", tipo: "corta",
+        enunciado: "¿Cómo se denomina la escritura sagrada egipcia compuesta por figuras y dibujos grabados en paredes y papiros?",
+        correcta: ["jeroglifica", "jeroglífica", "escritura jeroglifica", "escritura jeroglífica", "jeroglificos", "los jeroglificos"],
+        solucionVisible: "Escritura jeroglífica",
+        explicacion: "La escritura jeroglífica fue el sistema pictórico y fonético sagrado utilizado por escribas y sacerdotes durante milenios."
+    },
+    {
+        id: 70, tema: "egipto", tipo: "test",
+        enunciado: "¿Qué tres tipos de escritura contenía la Piedra de Rosetta que permitieron a Champollion descifrar los jeroglíficos en 1822?",
+        opciones: ["Jeroglífico egipcio, Demótico egipcio y Griego clásico", "Cuneiforme persa, Latín imperial y Hebreo", "Lineal A, Lineal B y Fenicio", "Árabe, Copto y Arameo"],
+        correcta: 0,
+        explicacion: "Al comparar el texto griego comprensible con las versiones jeroglífica y demótica, Champollion logró descifrar el alfabeto y los signos egipcios."
+    },
+
+    // ==========================================
+    // GRECIA ANTIGUA (30)
+    // ==========================================
+    {
+        id: 71, tema: "grecia", tipo: "test",
+        enunciado: "¿Cuáles son las dos características geográficas determinantes del territorio de la Hélade en la Grecia Antigua?",
+        opciones: ["El relieve sumamente montañoso y la inmediata proximidad al mar y sus costas", "Extensas llanuras selváticas y ríos navegables de miles de kilómetros", "Un desierto arenoso continuo sin salida marítima", "Una península llana con clima polar y sin islas"],
+        correcta: 0,
+        explicacion: "El terreno montañoso dividió a los griegos en valles aislados (polis), mientras que el mar Egeo los empujó al comercio marítimo."
+    },
+    {
+        id: 72, tema: "grecia", tipo: "test",
+        enunciado: "Aunque las polis griegas eran independientes y rivales, ¿qué tres vínculos esenciales les daban identidad común?",
+        opciones: ["La misma lengua griega, la misma cultura compartida y la misma religión politeísta", "Tener el mismo rey supremo, la misma capital y el mismo ejército", "Pagar los mismos impuestos a un senado central en Atenas", "Tener fronteras amuralladas idénticas en todas las ciudades"],
+        correcta: 0,
+        explicacion: "Los helenos compartían el idioma griego, la mitología de los dioses olímpicos y costumbres comunes como los Juegos Olímpicos."
+    },
+    {
+        id: 73, tema: "grecia", tipo: "corta",
+        enunciado: "¿Qué célebre disco circular de arcilla cocida con signos ideográficos impresos en espiral fue hallado en Creta en un palacio minoico?",
+        correcta: ["disco de festos", "el disco de festos"],
+        solucionVisible: "El Disco de Festos",
+        explicacion: "El Disco de Festos fue descubierto en el palacio cretense de Festos con decenas de sellos impresos aún no descifrados."
+    },
+    {
+        id: 74, tema: "grecia", tipo: "test",
+        enunciado: "¿En qué isla del mar Egeo se desarrolló la civilización minoica, famosa por sus palacios y frescos del salto del toro?",
+        opciones: ["Creta", "Rodas", "Lesbos", "Corfú"],
+        correcta: 0,
+        explicacion: "Creta fue la cuna de la cultura minoica, destacando los palacios laberínticos de Cnosos con pinturas de taurocatapsia."
+    },
+    {
+        id: 75, tema: "grecia", tipo: "corta",
+        enunciado: "¿Qué pueblo guerrero indoeuropeo se asentó en la Grecia continental fundando Micenas y utilizando la escritura arcaica Lineal B?",
+        correcta: ["aqueos", "los aqueos", "aqueo"],
+        solucionVisible: "Los aqueos (Civilización micénica)",
+        explicacion: "Los aqueos levantaron fortalezas amuralladas como Micenas y Tirinto y dominaron el mundo egeo en la Edad del Bronce."
+    },
+    {
+        id: 76, tema: "grecia", tipo: "test",
+        enunciado: "¿Qué dos grandes restos arqueológicos representan de forma emblemática el poder y el arte de Micenas?",
+        opciones: ["La Puerta de los Leones y las máscaras funerarias de oro (como la de Agamenón)", "El templo del Partenón y el Erecteion", "La Puerta de Ishtar y el código legal", "Las esfinges del Nilo y los hipogeos"],
+        correcta: 0,
+        explicacion: "La Puerta de los Leones ciclópea daba entrada a la acrópolis de Micenas, y en sus tumbas reales se desenterraron suntuosas máscaras de oro."
+    },
+    {
+        id: 77, tema: "grecia", tipo: "test",
+        enunciado: "¿Cuáles son las tres grandes etapas cronológicas en las que se divide la historia de la Grecia Antigua?",
+        opciones: ["Época Arcaica (s. VIII-VI a.C.), Época Clásica (s. V-IV a.C.) y Época Helenística (s. IV-I a.C.)", "Edad del Cobre, Edad del Bronce y Edad del Hierro", "Monarquía, República e Imperio", "Época Minoica, Época Romana y Época Bizantina"],
+        correcta: 0,
+        explicacion: "La evolución histórica griega transcurrió por la Época Arcaica (nacen las polis), la Clásica (esplendor y guerras) y la Helenística (expansión con Alejandro)."
+    },
+    {
+        id: 78, tema: "grecia", tipo: "test",
+        enunciado: "¿Qué eran las 'polis' en la Grecia Antigua?",
+        opciones: ["Ciudades-Estado independientes compuestas por un núcleo urbano y campos de cultivo, con leyes y gobierno propios", "Barrios residenciales dentro de una única capital griega", "Cuarteles militares temporales para acampar durante la guerra", "Grandes provincias coloniales gobernadas por sátrapas"],
+        correcta: 0,
+        explicacion: "Cada polis griega era una república o Estado soberano autárquico con su propio calendario, ejército, divinidad protectora y leyes."
+    },
+    {
+        id: 79, tema: "grecia", tipo: "corta",
+        enunciado: "¿En qué dos regiones de Grecia se encontraban las dos polis rivales más influyentes: Atenas y Esparta?",
+        correcta: ["atica y laconia", "el atica y laconia", "atica laconia"],
+        solucionVisible: "Ática (Atenas) y Laconia (Esparta)",
+        explicacion: "Atenas dominaba la península del Ática, mientras Esparta señoreaba la comarca de Laconia en el Peloponeso."
+    },
+    {
+        id: 80, tema: "grecia", tipo: "test",
+        enunciado: "¿Cuáles fueron las dos causas principales que impulsaron la gran oleada de colonizaciones griegas por el Mediterráneo en la Época Arcaica?",
+        opciones: ["El aumento de la población y la falta de tierras de cultivo suficientes en las polis", "La invasión de los persas y plagas desconocidas", "El deseo de construir pirámides en otros continentes", "La búsqueda exclusiva de metales preciosos para templos"],
+        correcta: 0,
+        explicacion: "El aumento demográfico y la escasez de suelo cultivable en el territorio rocoso empujaron a grupos de ciudadanos a emigrar y fundar colonias."
+    },
+    {
+        id: 81, tema: "grecia", tipo: "corta",
+        enunciado: "¿Qué gran consecuencia cultural y económica tuvo la fundación de colonias griegas por las costas mediterráneas?",
+        correcta: ["extension de la cultura griega", "difusion de la cultura griega", "expansion de la cultura griega", "comercio", "moneda alfabeto", "alfabeto y moneda"],
+        solucionVisible: "La extensión de la cultura griega (alfabeto, moneda y comercio)",
+        explicacion: "Las colonias extendieron el uso del alfabeto, la moneda acuñada, el trabajo del hierro y el arte helénico por todo el Mediterráneo."
+    },
+    {
+        id: 82, tema: "grecia", tipo: "test",
+        enunciado: "¿Qué dos colonias griegas destacaron en la costa mediterránea de la Península Ibérica?",
+        opciones: ["Emporion (Ampurias) y Hemeroscopio", "Masalia y Alalia", "Siracusa y Tarento", "Bizancio y Sinope"],
+        correcta: 0,
+        explicacion: "En el litoral ibérico peninsular los navegantes griegos establecieron factorías comerciales como Emporion (Girona) y Hemeroscopio (Alicante)."
+    },
+    {
+        id: 83, tema: "grecia", tipo: "corta",
+        enunciado: "¿Qué próspera colonia comercial fundaron los griegos de Focea en la costa sur de la actual Francia?",
+        correcta: ["masalia", "massalia", "marsella"],
+        solucionVisible: "Masalia (actual Marsella)",
+        explicacion: "Masalia se fundó hacia el 600 a.C. convirtiéndose en la metrópoli del comercio fluvial por el río Ródano."
+    },
+    {
+        id: 84, tema: "grecia", tipo: "test",
+        enunciado: "¿Qué fueron las Guerras Médicas (490-480 a.C.) y qué tres batallas principales consagraron la victoria griega?",
+        opciones: ["El conflicto contra el Imperio Persa, con las batallas de Maratón, Termópilas y Salamina", "La guerra civil entre Atenas y Esparta con las batallas de Tebas y Corinto", "La invasión romana contra Macedonia", "Las guerras púnicas contra Cartago"],
+        correcta: 0,
+        explicacion: "Las ciudades griegas unieron sus fuerzas para frenar el asalto del Imperio Persa de Darío y Jerjes en Maratón, Termópilas y la batalla naval de Salamina."
+    },
+    {
+        id: 85, tema: "grecia", tipo: "corta",
+        enunciado: "¿Cómo se llamó la confederación naval de ciudades griegas fundada bajo el liderazgo de Atenas y Pericles para defenderse de nuevos ataques persas?",
+        correcta: ["liga de delos", "la liga de delos"],
+        solucionVisible: "La Liga de Delos",
+        explicacion: "La Liga de Delos integraba a las polis marítimas del Egeo aportando dinero y naves con tesoro custodiado originariamente en la isla de Delos."
+    },
+    {
+        id: 86, tema: "grecia", tipo: "test",
+        enunciado: "¿Quién venció en la Guerra del Peloponeso (431-404 a.C.) que enfrentó a la Liga de Delos (Atenas) contra la Liga del Peloponeso (Esparta)?",
+        opciones: ["Esparta y sus aliados peloponesios", "Atenas y sus aliados jonios", "El Imperio persa de forma directa", "El reino de Macedonia"],
+        correcta: 0,
+        explicacion: "Esparta salió victoriosa tras prolongados asedios navales y terrestres, concluyendo la época dorada de la hegemonía democrática ateniense."
+    },
+    {
+        id: 87, tema: "grecia", tipo: "corta",
+        enunciado: "¿Qué rey de Macedonia sometió a las polis griegas tras derrotarlas en la batalla de Queronea en el año 338 a.C.?",
+        correcta: ["filipo ii", "filipo 2", "filipo ii de macedonia", "filipo de macedonia"],
+        solucionVisible: "Filipo II de Macedonia",
+        explicacion: "Filipo II de Macedonia aprovechó las discordias entre polis y las derrotó en Queronea unificándolas bajo su hegemonía militar."
+    },
+    {
+        id: 88, tema: "grecia", tipo: "test",
+        enunciado: "¿Qué dos grandes batallas permitieron a Alejandro Magno derrotar decisivamente al rey persa Darío III y conquistar su imperio?",
+        opciones: ["Las batallas de Isos y Gaugamela", "Las batallas de Maratón y Salamina", "Las batallas de Queronea y Leuctra", "Las batallas de Cannas y Zama"],
+        correcta: 0,
+        explicacion: "En Isos (333 a.C.) y en la llanura de Gaugamela (331 a.C.), las falanges y la caballería de Alejandro pulverizaron el poder persa."
+    },
+    {
+        id: 89, tema: "grecia", tipo: "test",
+        enunciado: "Tras la repentina muerte de Alejandro Magno, ¿qué reinos helenísticos gobernaron sus generales Ptolomeo y Seleuco?",
+        opciones: ["Ptolomeo gobernó Egipto; Seleuco gobernó Siria, Mesopotamia y Persia", "Ptolomeo gobernó Grecia; Seleuco gobernó Roma", "Ptolomeo gobernó la India; Seleuco gobernó Macedonia", "Ambos gobernaron conjuntamente la ciudad de Atenas"],
+        correcta: 0,
+        explicacion: "Sus generales dividieron el imperio en monarquías helenísticas: el reino ptolemaico en Egipto y el imperio seléucida en Siria y Asia."
+    },
+    {
+        id: 90, tema: "grecia", tipo: "corta",
+        enunciado: "¿Qué famosa ciudad portuaria fundada por Alejandro en el delta del Nilo se convirtió en el mayor foco científico y cultural del mundo helenístico?",
+        correcta: ["alejandria", "alejandría"],
+        solucionVisible: "Alejandría",
+        explicacion: "Alejandría de Egipto albergó la gran Biblioteca y el Faro, siendo el centro del saber científico de la época helenística."
+    },
+    {
+        id: 91, tema: "grecia", tipo: "test",
+        enunciado: "En el sistema político oligárquico de Esparta, ¿cuáles eran las cuatro instituciones que ejercían el poder?",
+        opciones: ["La Diarquía (dos reyes), la Gerusía (ancianos), la Apella (asamblea de varones) y los Éforos (magistrados)", "La Ekklesía, la Boulé, los Arcontes y los Tribunales populares", "El Senado, los Cónsules, los Tribunos y los Pretores", "El Faraón, los visires, los escribas y los sacerdotes"],
+        correcta: 0,
+        explicacion: "La oligarquía espartana combinaba 2 reyes religiosos/militares, un consejo de ancianos (Gerusía), la asamblea de guerreros (Apella) y 5 éforos ejecutivos."
+    },
+    {
+        id: 92, tema: "grecia", tipo: "test",
+        enunciado: "¿Cómo estaba estructurada la pirámide social en la ciudad-estado de Esparta?",
+        opciones: ["Espartanos (ciudadanos plenos) > Periecos (campesinos y artesanos libres sin voto) > Ilotas (siervos rurales) y esclavos", "Ciudadanos libres > Metecos extranjeros > Patricios > Plebeyos", "Faraón > Escribas > Militares > Campesinos", "Comerciantes > Artesanos > Sacerdotes > Reyes"],
+        correcta: 0,
+        explicacion: "Los espartiatas u 'homoioi' dedicados exclusivamente a la guerra dominaban sobre la población sometida de periecos libres e ilotas siervos."
+    },
+    {
+        id: 93, tema: "grecia", tipo: "corta",
+        enunciado: "En la democracia de Atenas, ¿cómo se llamaba el consejo de los 500 ciudadanos elegidos por sorteo que preparaba los asuntos para la asamblea?",
+        correcta: ["boule", "boulé", "la boule", "la boulé"],
+        solucionVisible: "La Boulé (Consejo de los 500)",
+        explicacion: "La Boulé preparaba los proyectos de ley y gestionaba la administración cotidiana de la democracia ateniense."
+    },
+    {
+        id: 94, tema: "grecia", tipo: "corta",
+        enunciado: "¿Cómo se llamaba el procedimiento político de la democracia ateniense que desterraba durante diez años a quien amenazaba la república, escribiendo su nombre en un trozo de cerámica?",
+        correcta: ["ostracismo", "el ostracismo"],
+        solucionVisible: "El ostracismo",
+        explicacion: "El ostracismo votaba en asamblea con tejuelos de cerámica (ostraka) para expulsar preventivamente a figuras sospechosas de aspirar a la tiranía."
+    },
+    {
+        id: 95, tema: "grecia", tipo: "test",
+        enunciado: "¿Cuáles eran los tres cultivos tradicionales que integraban la llamada 'trilogía mediterránea' en la agricultura de la Grecia Antigua?",
+        opciones: ["El cereal (trigo y cebada), la vid (vino) y el olivo (aceite)", "El maíz, el arroz y la caña de azúcar", "La patata, el tomate y las hortalizas", "El lino, el algodón y los frutales tropicales"],
+        correcta: 0,
+        explicacion: "La base alimenticia y agrícola del mundo griego residía en el pan de cereal, el aceite de oliva y el vino."
+    },
+    {
+        id: 96, tema: "grecia", tipo: "test",
+        enunciado: "¿Qué gran diferencia existía entre la educación tradicional de un niño en Atenas y la de uno en Esparta?",
+        opciones: ["En Atenas aprendían letras, música y oratoria con pedagogos; en Esparta recibían una durísima instrucción militar desde los 7 años", "En Atenas solo se adiestraba para la guerra y en Esparta se estudiaba filosofía", "En Atenas estudiaban en cuarteles cerrados y en Esparta no iban a la escuela", "La educación era totalmente idéntica en ambas ciudades"],
+        correcta: 0,
+        explicacion: "Atenas buscaba el desarrollo intelectual y físico del ciudadano en el hogar y academias, mientras que el Estado espartano sometía a los niños a la agogé militar comunitaria."
+    },
+    {
+        id: 97, tema: "grecia", tipo: "corta",
+        enunciado: "¿A qué poeta clásico griego de la Antigüedad se atribuye la autoría de los grandes poemas épicos de la Ilíada y la Odisea?",
+        correcta: ["homero"],
+        solucionVisible: "Homero",
+        explicacion: "Homero compuso los dos monumentos de la épica griega: la Ilíada (guerra de Troya) y la Odisea (aventuras de Ulises de regreso a Ítaca)."
+    },
+    {
+        id: 98, tema: "grecia", tipo: "test",
+        enunciado: "¿Quiénes fueron los tres principales filósofos del periodo clásico que sentaron las bases del pensamiento racional de Occidente en Atenas?",
+        opciones: ["Sócrates, Platón y Aristóteles", "Pitágoras, Hipócrates y Arquímedes", "Sófocles, Esquilo y Eurípides", "Pericles, Leónidas y Alejandro"],
+        correcta: 0,
+        explicacion: "Sócrates inauguró la dialéctica moral, Platón teorizó el mundo de las ideas y Aristóteles sistematizó la lógica, la biología y la política."
+    },
+    {
+        id: 99, tema: "grecia", tipo: "corta",
+        enunciado: "¿Cuáles son los tres órdenes o estilos arquitectónicos de columnas y capiteles creados por los griegos?",
+        correcta: ["dorico jonico y corintio", "dorico jonico corintio", "dórico jónico y corintio", "dórico jónico corintio", "dorico, jonico y corintio"],
+        solucionVisible: "Dórico, Jónico y Corintio",
+        explicacion: "El dórico se caracteriza por capitel liso y columna sin basa, el jónico por sus volutas en espiral y el corintio por hojas de acanto talladas."
+    },
+    {
+        id: 100, tema: "grecia", tipo: "test",
+        enunciado: "En la estructura arquitectónica de un templo griego, ¿cómo se llamaba la estancia interior principal donde se custodiaba la estatua monumental del dios?",
+        opciones: ["Naos (o cella)", "Pronaos", "Opistodomo", "Peristilo"],
+        correcta: 0,
+        explicacion: "La naos o cella era la nave central sagrada del templo donde reposaba la imagen de culto de la divinidad protectora."
+    }
+];
+
+// Variables de estado del cuestionario
+let listaPreguntasActivas = [];
+let indiceActual = 0;
+let preguntaActual = null;
+let contadorAciertos = 0;
+let contadorFallos = 0;
+let yaRespondida = false;
+
+// Función de normalización de textos para respuesta corta
+function limpiarTextoRespuesta(texto) {
+    if (!texto) return "";
+    return texto.toString().toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Quitar tildes
+        .replace(/[^a-z0-9\s]/g, " ")                   // Quitar signos de puntuación
+        .replace(/\s+/g, " ")                           // Unificar dobles espacios
+        .trim();
+}
+
+// Algoritmo de desordenado aleatorio Fisher-Yates
+function barajarArray(arrayOriginal) {
+    const arr = [...arrayOriginal];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+// Inicializar o reiniciar cuestionario con filtros
+function iniciarNuevaSesion() {
+    const tTema = document.getElementById("selTema").value;
+    const tTipo = document.getElementById("selTipo").value;
+    const cant = parseInt(document.getElementById("selCantidad").value, 10);
+
+    // Filtrar según selectores
+    let filtradas = bancoPreguntas.filter(item => {
+        const matchTema = (tTema === "todos") || (item.tema === tTema);
+        const matchTipo = (tTipo === "todos") || (item.tipo === tTipo);
+        return matchTema && matchTipo;
+    });
+
+    if (filtradas.length === 0) {
+        filtradas = [...bancoPreguntas];
+        document.getElementById("selTema").value = "todos";
+        document.getElementById("selTipo").value = "todos";
+    }
+
+    // Barajar aleatoriamente y recortar al tamaño deseado
+    const barajadas = barajarArray(filtradas);
+    listaPreguntasActivas = barajadas.slice(0, Math.min(cant, barajadas.length));
+
+    // Reset de variables
+    indiceActual = 0;
+    contadorAciertos = 0;
+    contadorFallos = 0;
+
+    document.getElementById("pantallaQuiz").classList.remove("d-none");
+    document.getElementById("pantallaResultados").classList.add("d-none");
+
+    actualizarMarcadores();
+    mostrarPreguntaEnPantalla();
+}
+
+function actualizarMarcadores() {
+    const total = listaPreguntasActivas.length;
+    const pendientes = total - indiceActual;
+    const contestadas = contadorAciertos + contadorFallos;
+    const nota = contestadas > 0 ? ((contadorAciertos / contestadas) * 10).toFixed(1) : "0.0";
+    const porcentaje = total > 0 ? Math.round((indiceActual / total) * 100) : 0;
+
+    document.getElementById("valPendientes").innerText = pendientes;
+    document.getElementById("valAciertos").innerText = contadorAciertos;
+    document.getElementById("valFallos").innerText = contadorFallos;
+    document.getElementById("valNota").innerText = nota;
+    document.getElementById("barraProgreso").style.width = porcentaje + "%";
+}
+
+function mostrarPreguntaEnPantalla() {
+    if (indiceActual >= listaPreguntasActivas.length) {
+        finalizarQuiz();
+        return;
+    }
+
+    preguntaActual = listaPreguntasActivas[indiceActual];
+    yaRespondida = false;
+
+    // Resetear contenedores de feedback y navegación
+    document.getElementById("panelCorreccion").classList.add("d-none");
+    document.getElementById("btnSiguientePregunta").classList.add("d-none");
+    document.getElementById("btnSaltar").classList.remove("d-none");
+
+    // Configurar insignias de cabecera
+    const tagTema = document.getElementById("tagTema");
+    tagTema.className = "badge px-3 py-2 rounded-pill fs-7";
+    if (preguntaActual.tema === "mesopotamia") {
+        tagTema.classList.add("badge-meso");
+        tagTema.innerHTML = '<i class="fa-solid fa-water me-1"></i> Mesopotamia';
+    } else if (preguntaActual.tema === "egipto") {
+        tagTema.classList.add("badge-egipto");
+        tagTema.innerHTML = '<i class="fa-solid fa-sun me-1"></i> Antiguo Egipto';
+    } else {
+        tagTema.classList.add("badge-grecia");
+        tagTema.innerHTML = '<i class="fa-solid fa-landmark me-1"></i> Grecia Antigua';
+    }
+
+    const tagTipo = document.getElementById("tagTipo");
+    if (preguntaActual.tipo === "test") {
+        tagTipo.innerHTML = '<i class="fa-regular fa-circle-dot me-1"></i> Tipo Test';
+    } else {
+        tagTipo.innerHTML = '<i class="fa-solid fa-pen me-1"></i> Respuesta Corta';
+    }
+
+    document.getElementById("tagContador").innerText = `Pregunta ${indiceActual + 1} de ${listaPreguntasActivas.length}`;
+    document.getElementById("textoEnunciado").innerText = preguntaActual.enunciado;
+
+    // Mostrar interfaz según tipo
+    if (preguntaActual.tipo === "test") {
+        document.getElementById("bloqueTest").classList.remove("d-none");
+        document.getElementById("bloqueCorta").classList.add("d-none");
+
+        preguntaActual.opciones.forEach((texto, i) => {
+            const btn = document.getElementById(`btnTest${i}`);
+            btn.querySelector(".opt-text").innerText = texto;
+            btn.className = "option-btn";
+            btn.disabled = false;
+        });
+    } else {
+        document.getElementById("bloqueTest").classList.add("d-none");
+        document.getElementById("bloqueCorta").classList.remove("d-none");
+
+        const input = document.getElementById("campoCorta");
+        input.value = "";
+        input.disabled = false;
+        input.className = "form-control form-control-lg rounded-start-3";
+        document.getElementById("btnValidarCorta").disabled = false;
+        setTimeout(() => input.focus(), 80);
+    }
+
+    actualizarMarcadores();
+}
+
+function responderOpcionTest(indiceSeleccionado) {
+    if (yaRespondida) return;
+    yaRespondida = true;
+
+    const esCorrecta = (indiceSeleccionado === preguntaActual.correcta);
+    if (esCorrecta) {
+        contadorAciertos++;
+    } else {
+        contadorFallos++;
+    }
+
+    // Colorear opciones
+    for (let i = 0; i < 4; i++) {
+        const btn = document.getElementById(`btnTest${i}`);
+        btn.disabled = true;
+        if (i === preguntaActual.correcta) {
+            btn.classList.add("btn-correct");
+        } else if (i === indiceSeleccionado && !esCorrecta) {
+            btn.classList.add("btn-wrong");
+        }
+    }
+
+    activarPanelFeedback(
+        esCorrecta,
+        esCorrecta ? "¡Excelente! Respuesta Correcta" : "Respuesta Incorrecta",
+        `Opción correcta: <strong>${preguntaActual.opciones[preguntaActual.correcta]}</strong>`
+    );
+}
+
+function responderCorta() {
+    if (yaRespondida) return;
+    const input = document.getElementById("campoCorta");
+    const valorUsuario = input.value.trim();
+
+    if (!valorUsuario) {
+        input.focus();
+        return;
+    }
+
+    yaRespondida = true;
+    input.disabled = true;
+    document.getElementById("btnValidarCorta").disabled = true;
+
+    const entradaLimpia = limpiarTextoRespuesta(valorUsuario);
+    const esCorrecta = preguntaActual.correcta.some(variante => {
+        const varLimpia = limpiarTextoRespuesta(variante);
+        return entradaLimpia === varLimpia || entradaLimpia.includes(varLimpia) || (varLimpia.length > 4 && varLimpia.includes(entradaLimpia));
+    });
+
+    if (esCorrecta) {
+        contadorAciertos++;
+        input.classList.add("is-valid");
+    } else {
+        contadorFallos++;
+        input.classList.add("is-invalid");
+    }
+
+    activarPanelFeedback(
+        esCorrecta,
+        esCorrecta ? "¡Correcto! Muy bien redactado" : "Respuesta no coincidente",
+        `Respuesta esperada: <strong>${preguntaActual.solucionVisible}</strong>`
+    );
+}
+
+function activarPanelFeedback(acierto, titulo, solucionHTML) {
+    const panel = document.getElementById("panelCorreccion");
+    const estilo = document.getElementById("estiloFeedback");
+    const icono = document.getElementById("iconoFeedback");
+    const tit = document.getElementById("tituloFeedback");
+    const sol = document.getElementById("respuestaFeedback");
+    const exp = document.getElementById("explicacionFeedback");
+
+    panel.classList.remove("d-none");
+    estilo.className = "feedback-box border p-3 mb-2 " + (acierto ? "bg-success-subtle border-success" : "bg-danger-subtle border-danger");
+
+    icono.innerHTML = acierto
+        ? '<i class="fa-solid fa-circle-check text-success"></i>'
+        : '<i class="fa-solid fa-circle-xmark text-danger"></i>';
+
+    tit.innerText = titulo;
+    sol.innerHTML = solucionHTML;
+    exp.innerHTML = `<strong>Explicación curricular:</strong> ${preguntaActual.explicacion}`;
+
+    document.getElementById("btnSiguientePregunta").classList.remove("d-none");
+    document.getElementById("btnSaltar").classList.add("d-none");
+    actualizarMarcadores();
+}
+
+function saltarPregunta() {
+    if (yaRespondida) return;
+    yaRespondida = true;
+    contadorFallos++;
+
+    if (preguntaActual.tipo === "test") {
+        for (let i = 0; i < 4; i++) {
+            const btn = document.getElementById(`btnTest${i}`);
+            btn.disabled = true;
+            if (i === preguntaActual.correcta) btn.classList.add("btn-correct");
+        }
+    } else {
+        document.getElementById("campoCorta").disabled = true;
+        document.getElementById("btnValidarCorta").disabled = true;
+    }
+
+    const solHTML = (preguntaActual.tipo === "test")
+        ? `La opción correcta era: <strong>${preguntaActual.opciones[preguntaActual.correcta]}</strong>`
+        : `La respuesta era: <strong>${preguntaActual.solucionVisible}</strong>`;
+
+    activarPanelFeedback(false, "Pregunta Saltada", solHTML);
+}
+
+function siguientePregunta() {
+    indiceActual++;
+    mostrarPreguntaEnPantalla();
+}
+
+function finalizarQuiz() {
+    document.getElementById("pantallaQuiz").classList.add("d-none");
+    document.getElementById("pantallaResultados").classList.remove("d-none");
+
+    const contestadas = contadorAciertos + contadorFallos;
+    const nota = contestadas > 0 ? ((contadorAciertos / contestadas) * 10).toFixed(1) : "0.0";
+
+    document.getElementById("resTotal").innerText = contestadas;
+    document.getElementById("resAciertos").innerText = contadorAciertos;
+    document.getElementById("resFallos").innerText = contadorFallos;
+    document.getElementById("resNota").innerText = nota;
+
+    const ico = document.getElementById("resIcono");
+    const tit = document.getElementById("resTitulo");
+    const msg = document.getElementById("resMensaje");
+
+    const n = parseFloat(nota);
+    if (n >= 9.0) {
+        ico.innerText = "👑";
+        tit.innerText = "¡Sobresaliente!";
+        msg.innerText = "Dominas a la perfección los contenidos de Mesopotamia, Egipto y Grecia Antigua.";
+    } else if (n >= 7.0) {
+        ico.innerText = "🏛️";
+        tit.innerText = "¡Notable!";
+        msg.innerText = "Muy buen resultado, tienes claros los conceptos fundamentales de las tres civilizaciones.";
+    } else if (n >= 5.0) {
+        ico.innerText = "📜";
+        tit.innerText = "¡Aprobado!";
+        msg.innerText = "Has superado el cuestionario, pero te vendrá bien repasar términos específicos antes del examen.";
+    } else {
+        ico.innerText = "🏺";
+        tit.innerText = "Necesitas Repasar";
+        msg.innerText = "Revisa los apuntes y vuelve a intentar otra sesión para afianzar los conceptos clave.";
+    }
+}
+
+// Configurar tecla Enter en respuesta corta e iniciar al cargar
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("campoCorta").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            responderCorta();
+        }
+    });
+    iniciarNuevaSesion();
+});
+</script>
+
+</body>
+</html>
